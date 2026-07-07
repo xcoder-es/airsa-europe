@@ -24,8 +24,11 @@
 .DS_Store
 *.pem
 
-# debug
+# package manager (using bun, not npm)
+package-lock.json
 npm-debug.log*
+
+# debug
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
