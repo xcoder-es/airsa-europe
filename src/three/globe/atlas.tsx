@@ -18,6 +18,7 @@ export interface AtlasState {
   connectionProgress: number;
   scrollOffset: number;
   rotationSpeed: number;
+  cameraTarget: [number, number, number] | undefined;
 }
 
 interface AtlasContextValue {
@@ -36,6 +37,7 @@ const INITIAL_STATE: AtlasState = {
   connectionProgress: 0,
   scrollOffset: 0,
   rotationSpeed: 0.05,
+  cameraTarget: undefined,
 };
 
 export function AtlasProvider({ children }: { children: ReactNode }) {
@@ -46,11 +48,11 @@ export function AtlasProvider({ children }: { children: ReactNode }) {
       let changed = false;
       const next = { ...prev };
       for (const key of Object.keys(partial) as (keyof AtlasState)[]) {
-        if (next[key] !== partial[key]) {
+        const value = partial[key];
+        if (value !== undefined && next[key] !== value) {
           changed = true;
         }
-        (next as Record<string, number | boolean>)[key] = partial[key] as
-          number | boolean;
+        (next as Record<string, unknown>)[key] = value;
       }
       return changed ? next : prev;
     });
