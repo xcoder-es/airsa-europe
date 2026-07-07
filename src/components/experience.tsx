@@ -16,14 +16,6 @@ const Scene03 = dynamic(
   () => import('@/sections/scene-03-thesis').then((m) => m.Scene03Thesis),
   { ssr: false },
 );
-const Scene04 = dynamic(
-  () => import('@/sections/scene-04-spain-gateway').then((m) => m.Scene04SpainGateway),
-  { ssr: false },
-);
-const Scene05 = dynamic(
-  () => import('@/sections/scene-05-why-spain').then((m) => m.Scene05WhySpain),
-  { ssr: false },
-);
 const Scene06 = dynamic(
   () => import('@/sections/scene-06-north-star').then((m) => m.Scene06NorthStar),
   { ssr: false },
@@ -37,8 +29,6 @@ export function Experience() {
           <Scene01 />
           <Scene02 />
           <Scene03 />
-          <Scene04 />
-          <Scene05 />
           <Scene06 />
         </main>
       </SmoothScrollProvider>
