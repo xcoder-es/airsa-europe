@@ -1,11 +1,19 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 
-interface AtlasState {
+export interface AtlasState {
   europeGlow: number;
   africaGlow: number;
   madridGlow: number;
+  madridScale: number;
   showConnections: boolean;
   connectionProgress: number;
   scrollOffset: number;
@@ -20,10 +28,11 @@ interface AtlasContextValue {
 
 const AtlasContext = createContext<AtlasContextValue | null>(null);
 
-const defaultState: AtlasState = {
+const INITIAL_STATE: AtlasState = {
   europeGlow: 0,
   africaGlow: 0.3,
   madridGlow: 0,
+  madridScale: 1,
   showConnections: false,
   connectionProgress: 0,
   scrollOffset: 0,
@@ -32,26 +41,26 @@ const defaultState: AtlasState = {
 };
 
 export function AtlasProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AtlasState>(defaultState);
+  const [state, setState] = useState<AtlasState>(INITIAL_STATE);
 
   const update = useCallback((partial: Partial<AtlasState>) => {
-    setState((prev) => {
+    setState((prev: AtlasState) => {
       let changed = false;
       const next = { ...prev };
       for (const key of Object.keys(partial) as (keyof AtlasState)[]) {
         const value = partial[key];
         if (value !== undefined && next[key] !== value) {
-          (next as Record<string, unknown>)[key] = value;
           changed = true;
         }
+        (next as Record<string, unknown>)[key] = value;
       }
       return changed ? next : prev;
     });
   }, []);
 
-  return (
-    <AtlasContext.Provider value={{ state, update }}>{children}</AtlasContext.Provider>
-  );
+  const value = useMemo(() => ({ state, update }), [state, update]);
+
+  return <AtlasContext.Provider value={value}>{children}</AtlasContext.Provider>;
 }
 
 export function useAtlas(): AtlasContextValue {
@@ -60,4 +69,8 @@ export function useAtlas(): AtlasContextValue {
     throw new Error('useAtlas must be used within an <AtlasProvider>');
   }
   return ctx;
+}
+
+export function useAtlasSafe(): AtlasContextValue | null {
+  return useContext(AtlasContext);
 }
