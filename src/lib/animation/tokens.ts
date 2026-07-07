@@ -17,7 +17,5 @@ export const sceneConfigs = [
   { id: 'scene-01' as const, label: 'Cosmic Intro', scrollHeight: 3, pin: true },
   { id: 'scene-02' as const, label: 'Continent Link', scrollHeight: 2.5, pin: true },
   { id: 'scene-03' as const, label: 'The Thesis', scrollHeight: 3, pin: true },
-  { id: 'scene-04' as const, label: 'Spain Gateway', scrollHeight: 3, pin: true },
-  { id: 'scene-05' as const, label: 'Why Spain', scrollHeight: 3, pin: true },
   { id: 'scene-06' as const, label: 'North Star', scrollHeight: 3, pin: true },
 ];
