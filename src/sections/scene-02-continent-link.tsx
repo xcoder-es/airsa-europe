@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { EarthCanvas } from '@/three/globe/earth-canvas';
 import { useSceneProgress } from '@/hooks/useSceneProgress';
+import { useAtlas } from '@/three/globe/atlas';
 
 export function Scene02ContinentLink() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -10,6 +11,7 @@ export function Scene02ContinentLink() {
     start: 'top top',
     end: 'bottom top',
   });
+  const { update } = useAtlas();
 
   useEffect(() => {
     const init = async () => {
@@ -32,6 +34,10 @@ export function Scene02ContinentLink() {
 
   const europeGlow = Math.min(1, progress * 1.5);
   const connectionProgress = Math.max(0, (progress - 0.3) / 0.7);
+
+  useEffect(() => {
+    update({ europeGlow, connectionProgress });
+  }, [europeGlow, connectionProgress, update]);
 
   return (
     <section

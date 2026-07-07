@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { ErrorBoundary } from '@/components/system/error-boundary';
 import { SmoothScrollProvider } from '@/components/system/smooth-scroll-provider';
+import { AtlasProvider } from '@/three/globe/atlas';
 
 const Scene01 = dynamic(
   () => import('@/sections/scene-01-cosmic-intro').then((m) => m.Scene01CosmicIntro),
@@ -32,16 +33,18 @@ const Scene06 = dynamic(
 export function Experience() {
   return (
     <ErrorBoundary>
-      <SmoothScrollProvider>
-        <main className="bg-black">
-          <Scene01 />
-          <Scene02 />
-          <Scene03 />
-          <Scene04 />
-          <Scene05 />
-          <Scene06 />
-        </main>
-      </SmoothScrollProvider>
+      <AtlasProvider>
+        <SmoothScrollProvider>
+          <main className="bg-black">
+            <Scene01 />
+            <Scene02 />
+            <Scene03 />
+            <Scene04 />
+            <Scene05 />
+            <Scene06 />
+          </main>
+        </SmoothScrollProvider>
+      </AtlasProvider>
     </ErrorBoundary>
   );
 }

@@ -6,6 +6,7 @@ import { Earth } from '@/three/globe/earth';
 import { Starfield } from '@/three/effects/starfield';
 import { ConnectionLines } from '@/three/effects/connection-lines';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useAtlasSafe } from '@/three/globe/atlas';
 
 const Canvas = dynamic(() => import('@react-three/fiber').then((mod) => mod.Canvas), {
   ssr: false,
@@ -22,15 +23,18 @@ interface EarthCanvasProps {
   cameraTarget?: [number, number, number];
 }
 
-function SceneContent({
-  europeGlow = 0,
-  africaGlow = 0.3,
-  madridGlow = 0,
-  showConnections = false,
-  connectionProgress = 0,
-  scrollOffset = 0,
-  rotationSpeed = 0.05,
-}: EarthCanvasProps) {
+function SceneContent(props: EarthCanvasProps) {
+  const atlas = useAtlasSafe();
+
+  const europeGlow = props.europeGlow ?? atlas?.state.europeGlow ?? 0;
+  const africaGlow = props.africaGlow ?? atlas?.state.africaGlow ?? 0.3;
+  const madridGlow = props.madridGlow ?? atlas?.state.madridGlow ?? 0;
+  const showConnections = props.showConnections ?? atlas?.state.showConnections ?? false;
+  const connectionProgress =
+    props.connectionProgress ?? atlas?.state.connectionProgress ?? 0;
+  const scrollOffset = props.scrollOffset ?? atlas?.state.scrollOffset ?? 0;
+  const rotationSpeed = props.rotationSpeed ?? atlas?.state.rotationSpeed ?? 0.05;
+
   return (
     <>
       <ambientLight intensity={0.15} />
