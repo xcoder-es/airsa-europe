@@ -27,3 +27,9 @@ export const scene05Copy = {
     { text: 'This is where continents connect.', svgPath: 'DIASPORA_NODES_PATH' },
   ],
 } as const;
+
+export const scene06Copy = {
+  mission: 'Building the Africa-Europe AI Corridor.',
+  subtitle: 'A shared horizon for two continents.',
+  pillars: ['Research', 'Innovation', 'Community', 'Partnerships'],
+} as const;
