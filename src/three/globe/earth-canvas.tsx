@@ -14,15 +14,18 @@ const Canvas = dynamic(() => import('@react-three/fiber').then((mod) => mod.Canv
 interface EarthCanvasProps {
   europeGlow?: number;
   africaGlow?: number;
+  madridGlow?: number;
   showConnections?: boolean;
   connectionProgress?: number;
   scrollOffset?: number;
   rotationSpeed?: number;
+  cameraTarget?: [number, number, number];
 }
 
 function SceneContent({
   europeGlow = 0,
   africaGlow = 0.3,
+  madridGlow = 0,
   showConnections = false,
   connectionProgress = 0,
   scrollOffset = 0,
@@ -36,6 +39,7 @@ function SceneContent({
       <Earth
         europeGlow={europeGlow}
         africaGlow={africaGlow}
+        madridGlow={madridGlow}
         rotationSpeed={rotationSpeed}
       />
       {showConnections && <ConnectionLines progress={connectionProgress} />}
