@@ -14,3 +14,8 @@ export const Scene03Thesis = dynamic(
   () => import('@/sections/scene-03-thesis').then((m) => m.Scene03Thesis),
   { ssr: false },
 );
+
+export const Scene04SpainGateway = dynamic(
+  () => import('@/sections/scene-04-spain-gateway').then((m) => m.Scene04SpainGateway),
+  { ssr: false },
+);
