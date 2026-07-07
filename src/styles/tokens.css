@@ -1,0 +1,37 @@
+:root {
+  /* Color — deep black canvas */
+  --color-void: #000000;
+  --color-surface: #0a0a0f;
+  --color-surface-elevated: #111118;
+
+  /* Accent — electric blue */
+  --color-accent: #3b82f6;
+  --color-accent-bright: #60a5fa;
+  --color-accent-glow: rgba(59, 130, 246, 0.35);
+
+  /* Text hierarchy */
+  --color-text-primary: rgba(255, 255, 255, 0.95);
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.4);
+
+  /* Typography scale */
+  --text-display: clamp(2.5rem, 6vw, 5.5rem);
+  --text-headline: clamp(1.75rem, 4vw, 3.5rem);
+  --text-body: clamp(1rem, 1.5vw, 1.125rem);
+  --text-caption: 0.875rem;
+
+  /* Spacing */
+  --space-section-y: clamp(3rem, 10vh, 7.5rem);
+  --space-content-max: 75rem;
+  --space-gutter: clamp(1.5rem, 4vw, 3rem);
+
+  /* Motion */
+  --ease-primary: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --duration-instant: 100ms;
+  --duration-fast: 300ms;
+  --duration-medium: 600ms;
+  --duration-slow: 1200ms;
+  --duration-cinematic: 2400ms;
+}
