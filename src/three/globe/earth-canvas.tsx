@@ -77,10 +77,12 @@ export function EarthCanvas(props: EarthCanvasProps) {
       <Canvas
         camera={{ position: [0, 0, 6], fov: 45 }}
         dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
         style={{ background: 'transparent' }}
       >
-        <SceneContent {...props} />
+        <Suspense fallback={null}>
+          <SceneContent {...props} />
+        </Suspense>
       </Canvas>
     </Suspense>
   );

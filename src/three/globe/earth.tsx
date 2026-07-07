@@ -2,7 +2,10 @@
 
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+
+const EARTH_MAP = 'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg';
 
 interface EarthProps {
   rotationSpeed?: number;
@@ -26,6 +29,7 @@ export function Earth({
   const europeRef = useRef<THREE.Mesh>(null);
   const africaRef = useRef<THREE.Mesh>(null);
   const madridRef = useRef<THREE.Mesh>(null);
+  const texture = useTexture(EARTH_MAP);
 
   useFrame((_, delta) => {
     if (groupRef.current) {
@@ -54,11 +58,11 @@ export function Earth({
       <mesh ref={earthRef}>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial
-          color="#0a1628"
-          roughness={0.9}
+          map={texture}
+          roughness={0.5}
           metalness={0.1}
           emissive="#1a2a4a"
-          emissiveIntensity={0.15}
+          emissiveIntensity={0.1}
         />
       </mesh>
 

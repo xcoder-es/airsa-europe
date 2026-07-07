@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Lenis from 'lenis';
-import { setLenisInstance } from '@/lib/animation/orchestrator';
+import { setLenisInstance, initScrollOrchestrator } from '@/lib/animation/orchestrator';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface SmoothScrollProviderProps {
@@ -31,9 +31,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     rafId = requestAnimationFrame(raf);
 
     const initGsap = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
+      const { ScrollTrigger } = await initScrollOrchestrator();
       lenis.on('scroll', ScrollTrigger.update);
       ScrollTrigger.scrollerProxy(document.body, {
         scrollTop(value) {

@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { StatementReveal } from '@/components/narrative/statement-reveal';
 import { SvgPath } from '@/components/narrative/svg-path';
 import { useSceneProgress } from '@/hooks/useSceneProgress';
+import { usePinnedScene } from '@/lib/animation/use-pinned-scene';
 import {
   EU_STARS_PATH,
   MEDITERRANEAN_ARC_PATH,
@@ -45,24 +46,7 @@ export function Scene05WhySpain() {
     end: 'bottom top',
   });
 
-  useEffect(() => {
-    const init = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
-
-      if (!sectionRef.current) return;
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=300%',
-        pin: true,
-        pinSpacing: true,
-      });
-    };
-    init();
-  }, []);
+  usePinnedScene(sectionRef);
 
   return (
     <section

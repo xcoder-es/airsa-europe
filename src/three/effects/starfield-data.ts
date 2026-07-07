@@ -1,4 +1,4 @@
-const STAR_COUNT = 2000;
+const STAR_COUNT = 800;
 
 function createStarfieldData() {
   const positions = new Float32Array(STAR_COUNT * 3);

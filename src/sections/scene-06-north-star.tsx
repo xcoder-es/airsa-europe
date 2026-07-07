@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { OrbitSystem } from '@/components/narrative/orbit-system';
 import { StatementReveal } from '@/components/narrative/statement-reveal';
 import { useSceneProgress } from '@/hooks/useSceneProgress';
+import { usePinnedScene } from '@/lib/animation/use-pinned-scene';
 
 const pillars = [
   { id: 'research', label: 'Research', color: '#60a5fa' },
@@ -19,24 +20,7 @@ export function Scene06NorthStar() {
     end: 'bottom top',
   });
 
-  useEffect(() => {
-    const init = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
-
-      if (!sectionRef.current) return;
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=300%',
-        pin: true,
-        pinSpacing: true,
-      });
-    };
-    init();
-  }, []);
+  usePinnedScene(sectionRef);
 
   const showSubtitle = progress > 0.75;
 

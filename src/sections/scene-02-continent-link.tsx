@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { EarthCanvas } from '@/three/globe/earth-canvas';
-import { useSceneProgress } from '@/hooks/useSceneProgress';
 import { useAtlas } from '@/three/globe/atlas';
+import { useSceneProgress } from '@/hooks/useSceneProgress';
+import { usePinnedScene } from '@/lib/animation/use-pinned-scene';
 
 export function Scene02ContinentLink() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -13,30 +13,19 @@ export function Scene02ContinentLink() {
   });
   const { update } = useAtlas();
 
-  useEffect(() => {
-    const init = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
-
-      if (!sectionRef.current) return;
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=250%',
-        pin: true,
-        pinSpacing: true,
-      });
-    };
-    init();
-  }, []);
+  usePinnedScene(sectionRef, '+=250%');
 
   const europeGlow = Math.min(1, progress * 1.5);
   const connectionProgress = Math.max(0, (progress - 0.3) / 0.7);
 
   useEffect(() => {
-    update({ europeGlow, connectionProgress });
+    update({
+      europeGlow,
+      africaGlow: 0.5,
+      showConnections: true,
+      connectionProgress,
+      rotationSpeed: 0.03,
+    });
   }, [europeGlow, connectionProgress, update]);
 
   return (
@@ -47,16 +36,6 @@ export function Scene02ContinentLink() {
       className="relative h-screen"
     >
       <div className="absolute inset-0 bg-black" />
-
-      <div className="absolute inset-0">
-        <EarthCanvas
-          europeGlow={europeGlow}
-          africaGlow={0.5}
-          showConnections
-          connectionProgress={connectionProgress}
-          rotationSpeed={0.03}
-        />
-      </div>
 
       <div className="relative z-10 flex h-full items-end justify-center pb-24">
         <p

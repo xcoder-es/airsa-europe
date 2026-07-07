@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { EarthCanvas } from '@/three/globe/earth-canvas';
+import { useRef } from 'react';
+import { useAtlas } from '@/three/globe/atlas';
 import { StatementReveal } from '@/components/narrative/statement-reveal';
 import { useSceneProgress } from '@/hooks/useSceneProgress';
+import { usePinnedScene } from '@/lib/animation/use-pinned-scene';
 
 export function Scene04SpainGateway() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -11,29 +12,19 @@ export function Scene04SpainGateway() {
     start: 'top top',
     end: 'bottom top',
   });
+  const { update } = useAtlas();
 
-  useEffect(() => {
-    const init = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
-
-      if (!sectionRef.current) return;
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=300%',
-        pin: true,
-        pinSpacing: true,
-      });
-    };
-    init();
-  }, []);
+  usePinnedScene(sectionRef);
 
   const madridGlow = Math.min(1, progress * 1.2);
   const showFirstText = progress > 0.2;
   const showSecondText = progress > 0.5;
+
+  update({
+    madridGlow,
+    scrollOffset: progress,
+    rotationSpeed: 0.02,
+  });
 
   return (
     <section
@@ -43,15 +34,6 @@ export function Scene04SpainGateway() {
       className="relative h-screen"
     >
       <div className="absolute inset-0 bg-black" />
-
-      <div className="absolute inset-0">
-        <EarthCanvas
-          madridGlow={madridGlow}
-          cameraTarget={[0.5, 0.3, 3.5]}
-          scrollOffset={progress}
-          rotationSpeed={0.02}
-        />
-      </div>
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
         <StatementReveal

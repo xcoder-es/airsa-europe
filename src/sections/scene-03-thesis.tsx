@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { StatementReveal } from '@/components/narrative/statement-reveal';
 import { useSceneProgress } from '@/hooks/useSceneProgress';
+import { usePinnedScene } from '@/lib/animation/use-pinned-scene';
 
 const statements = [
   { text: 'Europe has research.', threshold: 0.15 },
@@ -20,24 +21,7 @@ export function Scene03Thesis() {
     end: 'bottom top',
   });
 
-  useEffect(() => {
-    const init = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
-
-      if (!sectionRef.current) return;
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=300%',
-        pin: true,
-        pinSpacing: true,
-      });
-    };
-    init();
-  }, []);
+  usePinnedScene(sectionRef);
 
   return (
     <section

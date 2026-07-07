@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useState, useRef, type RefObject } from 'react';
+import { initScrollOrchestrator } from '@/lib/animation/orchestrator';
 
 interface UseSceneProgressOptions {
   start?: string;
@@ -12,31 +13,38 @@ export function useSceneProgress(
   options: UseSceneProgressOptions = {},
 ): number {
   const [progress, setProgress] = useState(0);
+  const triggerRef = useRef<{ kill: () => void } | null>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    let cleanup: (() => void) | undefined;
+    let cancelled = false;
 
     const init = async () => {
-      const gsap = (await import('gsap')).default;
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
+      const { ScrollTrigger } = await initScrollOrchestrator();
+      if (cancelled) return;
 
       const trigger = ScrollTrigger.create({
         trigger: el,
         start: options.start ?? 'top top',
         end: options.end ?? 'bottom top',
         scrub: true,
-        onUpdate: (self) => setProgress(self.progress),
+        onUpdate: (self) => {
+          if (!cancelled) setProgress(self.progress);
+        },
       });
 
-      cleanup = () => trigger.kill();
+      triggerRef.current = trigger;
     };
 
     init();
-    return () => cleanup?.();
+
+    return () => {
+      cancelled = true;
+      triggerRef.current?.kill();
+      triggerRef.current = null;
+    };
   }, [ref, options.start, options.end]);
 
   return progress;
