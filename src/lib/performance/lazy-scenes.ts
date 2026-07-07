@@ -19,3 +19,8 @@ export const Scene04SpainGateway = dynamic(
   () => import('@/sections/scene-04-spain-gateway').then((m) => m.Scene04SpainGateway),
   { ssr: false },
 );
+
+export const Scene05WhySpain = dynamic(
+  () => import('@/sections/scene-05-why-spain').then((m) => m.Scene05WhySpain),
+  { ssr: false },
+);
