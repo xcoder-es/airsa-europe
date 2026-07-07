@@ -16,6 +16,10 @@ const Scene03 = dynamic(
   () => import('@/sections/scene-03-thesis').then((m) => m.Scene03Thesis),
   { ssr: false },
 );
+const Scene04 = dynamic(
+  () => import('@/sections/scene-04-spain-gateway').then((m) => m.Scene04SpainGateway),
+  { ssr: false },
+);
 
 export function Experience() {
   return (
@@ -25,6 +29,7 @@ export function Experience() {
           <Scene01 />
           <Scene02 />
           <Scene03 />
+          <Scene04 />
         </main>
       </SmoothScrollProvider>
     </ErrorBoundary>

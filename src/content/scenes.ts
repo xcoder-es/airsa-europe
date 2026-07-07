@@ -14,3 +14,8 @@ export const scene03Copy = {
     'Together they create something neither can build alone.',
   ],
 } as const;
+
+export const scene04Copy = {
+  line1: 'Spain is not just at the edge of Europe.',
+  line2: 'It is the bridge between two worlds.',
+} as const;
