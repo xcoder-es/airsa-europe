@@ -107,7 +107,7 @@ export function Scene05WhySpain() {
             visible={progress > stmt.threshold}
             delay={idx * 0.1}
             className={`font-display max-w-4xl leading-[1.15] tracking-[-0.02em] ${
-              i === statements.length - 1
+              idx === statements.length - 1
                 ? 'text-[var(--text-headline)] text-[var(--color-accent-bright)]'
                 : 'text-[var(--text-headline)] text-[var(--color-text-primary)]'
             }`}
