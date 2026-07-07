@@ -6,6 +6,7 @@ import { Earth } from '@/three/globe/earth';
 import { Starfield } from '@/three/effects/starfield';
 import { ConnectionLines } from '@/three/effects/connection-lines';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useCameraZoom } from '@/hooks/useCameraZoom';
 
 const Canvas = dynamic(() => import('@react-three/fiber').then((mod) => mod.Canvas), {
   ssr: false,
@@ -30,7 +31,10 @@ function SceneContent({
   connectionProgress = 0,
   scrollOffset = 0,
   rotationSpeed = 0.05,
+  cameraTarget,
 }: EarthCanvasProps) {
+  useCameraZoom(cameraTarget, madridGlow);
+
   return (
     <>
       <ambientLight intensity={0.15} />
